@@ -1,6 +1,13 @@
 package com.abyrc.thesimpsons.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "first_appearance_ep")
 public class FirstAppearanceEp {
+    @Id
     private Integer id;
     private String airdate;
     private String description;
