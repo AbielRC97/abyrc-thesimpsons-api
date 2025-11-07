@@ -3,11 +3,9 @@ package com.abyrc.thesimpsons.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.abyrc.thesimpsons.entities.Actor;
-import com.abyrc.thesimpsons.services.SimpsonApiService;
+import com.abyrc.thesimpsons.services.ActorService;
 
-import reactor.core.publisher.Mono;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -15,15 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/characters")
 public class CharactersController {
-    private final SimpsonApiService simpsonApiService;
+    private final ActorService service;
 
-    public CharactersController(SimpsonApiService simpsonApiService) {
-        this.simpsonApiService = simpsonApiService;
+    public CharactersController(ActorService service) {
+        this.service = service;
     }
 
     @GetMapping("/{id}")
-    public Mono<Actor> getMethodName(@PathVariable Long id) {
-        return simpsonApiService.getActors(id);
+    public ResponseEntity<?> getMethodName(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getActorById(id));
     }
     
 }

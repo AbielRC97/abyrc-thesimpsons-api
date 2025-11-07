@@ -2,10 +2,12 @@ package com.abyrc.thesimpsons.entities;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -16,6 +18,8 @@ public class Actor {
     private Long id;
     private Integer age;
     private String birthdate;
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
     @Column(name = "first_appearance_ep_id", insertable = false, updatable = false)
     private Integer first_appearance_ep_id;
@@ -26,7 +30,7 @@ public class Actor {
     private List<String> phrases;
     private String portrait_path;
     private String status;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "first_appearance_ep_id")
     private FirstAppearanceEp first_appearance_ep;
 
