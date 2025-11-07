@@ -30,15 +30,14 @@ public class ActorService {
 
 
     public Mono<ActorDTO> getActorById(Long id) {
-        return Mono.fromCallable(() -> actorRepository.findById(id)
-                .orElseGet(() -> {
-                    Actor actor = simpsonApiService.getActors(id).block();
-                    System.out.println("***************************");
-                    System.out.println(actor.getFirstAppearanceEp());
-                    return actorRepository.save(actor);
-                }))
-                .subscribeOn(Schedulers.boundedElastic())
-                .map(mapper::toDTO);
+        return Mono.fromCallable(() -> simpsonApiService.getActors(id)).subscribeOn(Schedulers.boundedElastic()).map(item -> {
+            Actor select = item.block();
+            if (select == null) {
+                throw new IllegalArgumentException("Actor not found");
+            }
+            actorRepository.save(select);
+            return mapper.toDTO(select);
+        });
     }
 
     public List<ActorDTO> getAllActors() {
