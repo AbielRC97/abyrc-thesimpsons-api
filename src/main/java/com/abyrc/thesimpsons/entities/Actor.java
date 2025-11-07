@@ -22,7 +22,7 @@ public class Actor {
     @Column(columnDefinition = "TEXT")
     private String description;
     @Column(name = "first_appearance_ep_id", insertable = false, updatable = false)
-    private Integer first_appearance_ep_id;
+    private Integer firstAppearanceEpId;
     private Integer first_appearance_sh_id;
     private String gender;
     private String name;
@@ -32,7 +32,7 @@ public class Actor {
     private String status;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "first_appearance_ep_id")
-    private FirstAppearanceEp first_appearance_ep;
+    private FirstAppearanceEp firstAppearanceEp;
 
     public Long getId() {
         return id;
@@ -66,13 +66,6 @@ public class Actor {
         this.description = description;
     }
 
-    public Integer getFirst_appearance_ep_id() {
-        return first_appearance_ep_id;
-    }
-
-    public void setFirst_appearance_ep_id(Integer first_appearance_ep_id) {
-        this.first_appearance_ep_id = first_appearance_ep_id;
-    }
 
     public Integer getFirst_appearance_sh_id() {
         return first_appearance_sh_id;
@@ -130,11 +123,21 @@ public class Actor {
         this.status = status;
     }
 
-    public FirstAppearanceEp getFirst_appearance_ep() {
-        return first_appearance_ep;
+    
+
+    public Integer getFirstAppearanceEpId() {
+        return firstAppearanceEpId;
     }
 
-    public void setFirst_appearance_ep(FirstAppearanceEp first_appearance_ep) {
-        this.first_appearance_ep = first_appearance_ep;
+    public void setFirstAppearanceEpId(Integer firstAppearanceEpId) {
+        this.firstAppearanceEpId = firstAppearanceEpId;
+    }
+
+    public FirstAppearanceEp getFirstAppearanceEp() {
+        return firstAppearanceEp;
+    }
+
+    public void setFirstAppearanceEp(FirstAppearanceEp firstAppearanceEp) {
+        this.firstAppearanceEp = firstAppearanceEp;
     }
 }
