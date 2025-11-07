@@ -2,6 +2,8 @@ package com.abyrc.thesimpsons.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,6 +34,7 @@ public class Actor {
     private String status;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "first_appearance_ep_id")
+    @JsonProperty("first_appearance_ep")
     private FirstAppearanceEp firstAppearanceEp;
 
     public Long getId() {
