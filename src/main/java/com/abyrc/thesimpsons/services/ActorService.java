@@ -38,8 +38,8 @@ public class ActorService {
                 .map(mapper::toDTO);
     }
 
-    public List<Actor> getAllActors() {
-        return actorRepository.findAll();
+    public List<ActorDTO> getAllActors() {
+        return actorRepository.findAll().stream().map(mapper::toDTO).toList();
     }
 
 }

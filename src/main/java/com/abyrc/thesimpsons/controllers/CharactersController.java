@@ -20,8 +20,12 @@ public class CharactersController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getMethodName(@PathVariable Long id) {
+    public ResponseEntity<?> findActorById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getActorById(id));
     }
     
+    @GetMapping
+    public ResponseEntity<?> findAllActor() {
+        return ResponseEntity.ok(service.getAllActors());
+    }
 }
