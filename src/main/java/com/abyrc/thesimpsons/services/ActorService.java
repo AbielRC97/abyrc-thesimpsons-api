@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.abyrc.thesimpsons.automappers.ActorMapper;
+import com.abyrc.thesimpsons.dtos.ActorDTO;
 import com.abyrc.thesimpsons.entities.Actor;
 import com.abyrc.thesimpsons.repositories.ActorRepository;
 
@@ -14,26 +16,26 @@ import reactor.core.scheduler.Schedulers;
 public class ActorService {
     private final SimpsonApiService simpsonApiService;
     private final ActorRepository actorRepository;
+    private final ActorMapper mapper;
 
-    public ActorService(SimpsonApiService simpsonApiService, ActorRepository actorRepository) {
+    public ActorService(SimpsonApiService simpsonApiService, ActorRepository actorRepository, ActorMapper mapper) {
         this.simpsonApiService = simpsonApiService;
         this.actorRepository = actorRepository;
+        this.mapper = mapper;
     }
 
     public boolean existsActorById(Long id) {
         return actorRepository.existsById(id);
     }
 
-    public Mono<Actor> getActorById(Long id) {
-        return Mono.fromCallable(() -> {
-            // Verifica si existe en la base de datos (bloqueante)
-            return actorRepository.findById(id)
-                    .orElseGet(() -> {
-                        // Si no existe, llama a la API externa (reactivo, pero usamos block aquí)
-                        Actor actor = simpsonApiService.getActors(id).block();
-                        return actorRepository.save(actor);
-                    });
-        }).subscribeOn(Schedulers.boundedElastic()); // ← mueve la carga bloqueante a otro hilo
+    public Mono<ActorDTO> getActorById(Long id) {
+        return Mono.fromCallable(() -> actorRepository.findById(id)
+                .orElseGet(() -> {
+                    Actor actor = simpsonApiService.getActors(id).block();
+                    return actorRepository.save(actor);
+                }))
+                .subscribeOn(Schedulers.boundedElastic())
+                .map(mapper::toDTO);
     }
 
     public List<Actor> getAllActors() {

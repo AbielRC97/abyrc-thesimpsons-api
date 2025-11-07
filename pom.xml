@@ -61,6 +61,20 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- 🧭 MapStruct para mapeo DTO ↔ entidad -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
+		<!-- 🔧 Procesador de anotaciones de MapStruct -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.6.2</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
